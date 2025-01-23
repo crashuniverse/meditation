@@ -1,10 +1,19 @@
 <script>
-  let durationInSeconds = 10;
+  import { onMount } from "svelte";
+  import yoga from "../images/yoga_11063629.png";
+
+  let durationInSeconds = "60";
+  let meditationInputElement;
   let meditationPrompt = "";
   let musicPrompt = "";
+  let email = "";
   let isAudioHidden = false;
   let isLoading = false;
   let audioSrc;
+
+  onMount(() => {
+    meditationInputElement.focus();
+  });
 
   function handleClick() {
     console.log("clicked");
@@ -19,6 +28,7 @@
         duration: durationInSeconds,
         meditationPrompt: meditationPrompt,
         musicPrompt: musicPrompt,
+        email: email,
       }),
     })
       .then((response) => response.text())
@@ -36,48 +46,71 @@
 </script>
 
 <header>
-  <h1>rainforest</h1>
+  <div class="flex-row pad-16">
+    <h1>Meditate GPT</h1>
+    <div>
+      <img src={yoga} alt="yoga" width="60" />
+    </div>
+  </div>
+  <div>Powered by BuildShip</div>
 </header>
 <main>
   <div>
-    <div>Meditation prompt</div>
+    <div>Description</div>
     <input
       type="text"
       bind:value={meditationPrompt}
-      placeholder="I am stressed after a day of work and I want a relaxing evening meditation."
+      placeholder="I'm feeling nostalgic, help me focus on the present and future"
+      bind:this={meditationInputElement}
     />
   </div>
   <div>
-    <div>Duration (in seconds)</div>
-    <input
-      type="radio"
-      id="10"
-      value="10"
-      name="duration"
-      bind:group={durationInSeconds}
-      checked
-    />
-    <span>10</span>
+    <strong>Describe your meditation session</strong>
+  </div>
+  <div>
+    <div>Meditation duration</div>
     <input
       type="radio"
       id="60"
       value="60"
       name="duration"
       bind:group={durationInSeconds}
+      checked={durationInSeconds === "60"}
     />
-    <span>60</span>
+    <label for="60">1 min</label>
+    <input
+      type="radio"
+      id="180"
+      value="180"
+      name="duration"
+      bind:group={durationInSeconds}
+    />
+    <label for="180">3 mins</label>
+    <input
+      type="radio"
+      id="600"
+      value="600"
+      name="duration"
+      bind:group={durationInSeconds}
+    />
+    <label for="600">10 mins</label>
   </div>
   <div>
-    <div>Music prompt</div>
-    <input type="text" bind:value={musicPrompt} placeholder="calm" />
+    <div>Email</div>
+    <div>
+      Enter your email to receive the meditation audio via email once it is
+      generated
+    </div>
+    <input type="email" bind:value={email} placeholder="you@example.com" />
   </div>
   <br />
   <button onclick={handleClick}>Start meditation</button>
   {#if isAudioHidden}
     <div>
       <p>
-        Immerse yourself in this serene audio journey, crafted to gently guide
-        your mind into a state of deep meditation and tranquility.
+        Generate a meditation session complete with a relaxing background,
+        featuring gentle music, and guided breathing exercise to help you
+        achieve a state of deep relaxation and mindfulness.
       </p>
       <audio controls>
         <source src={audioSrc} type="audio/mpeg" />
@@ -96,7 +129,30 @@
 </main>
 
 <style>
+  :root {
+    --color-bg: #000;
+    --color-text: #fff;
+    --color-text-secondary: #aaa;
+    --color-link: #fafafa;
+  }
+
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pad-16 {
+    padding: 16px 0 0;
+  }
+
+  h1 {
+    margin-bottom: 0.2rem;
+  }
+
   button {
     padding: 0.6rem 2rem;
+    font-weight: normal;
   }
 </style>
