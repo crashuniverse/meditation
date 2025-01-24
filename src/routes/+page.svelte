@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import yoga from "../images/yoga_11063629.png";
+  import logo from "../images/logo.png";
 
   let durationInSeconds = 60;
   let meditationInputElement;
@@ -49,10 +49,10 @@
   <div class="flex-row pad-16">
     <h1>Meditate GPT</h1>
     <div>
-      <img src={yoga} alt="yoga" width="60" />
+      <img src={logo} alt="meditate gpt logo" width="60" />
     </div>
   </div>
-  <div>Powered by BuildShip</div>
+  <div>Powered by AHOUM</div>
 </header>
 <main>
   <div>
