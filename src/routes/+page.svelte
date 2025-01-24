@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import logo from "../images/logo.png";
 
-  let durationInSeconds = 60;
+  let durationInSeconds = "180";
   let meditationInputElement;
   let meditationPrompt = "";
   let musicPrompt = "";
@@ -19,7 +19,7 @@
     console.log("clicked");
     isAudioHidden = false;
     isLoading = true;
-    fetch("https://g5m4ju.buildship.run/meditate-gpt-68bf08b63895", {
+    fetch("https://vlui9b.buildship.run/meditate-gpt-b5517a9775bc", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,10 +31,10 @@
         email: email,
       }),
     })
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        audioSrc = data;
+        audioSrc = data?.generatePublicDownloadUrl;
         isAudioHidden = true;
       })
       .finally(() => {
@@ -46,38 +46,30 @@
 </script>
 
 <header>
-  <div class="flex-row pad-16">
-    <h1>Meditate GPT</h1>
+  <div class="flex-row pad-60-top">
+    <h1>SPIRAL OF LIFE</h1>
     <div>
-      <img src={logo} alt="meditate gpt logo" width="60" />
+      <img src={logo} alt="meditate gpt logo" width="80" />
     </div>
   </div>
   <div>Powered by AHOUM</div>
 </header>
 <main>
   <div>
-    <div>Description</div>
-    <input
+    <label for="meditationPrompt">Description</label>
+    <textarea
+      id="meditationPrompt"
       type="text"
       bind:value={meditationPrompt}
       placeholder="I'm feeling nostalgic, help me focus on the present and future"
       bind:this={meditationInputElement}
-    />
+      rows="3"
+    ></textarea>
+    <div class="mute">Describe your meditation session</div>
+    <br />
   </div>
   <div>
-    <strong>Describe your meditation session</strong>
-  </div>
-  <div>
-    <div>Meditation duration</div>
-    <input
-      type="radio"
-      id="60"
-      value="60"
-      name="duration"
-      bind:group={durationInSeconds}
-      checked={durationInSeconds === "60"}
-    />
-    <label for="60">1 min</label>
+    <label for="180">Meditation duration</label>
     <input
       type="radio"
       id="180"
@@ -86,22 +78,15 @@
       bind:group={durationInSeconds}
     />
     <label for="180">3 mins</label>
-    <input
-      type="radio"
-      id="600"
-      value="600"
-      name="duration"
-      bind:group={durationInSeconds}
-    />
-    <label for="600">10 mins</label>
+    <br /><br />
   </div>
   <div>
-    <div>Email</div>
-    <div>
+    <label for="email">Email</label>
+    <input id="email" type="email" bind:value={email} placeholder="you@example.com" />
+    <div class="mute">
       Enter your email to receive the meditation audio via email once it is
       generated
     </div>
-    <input type="email" bind:value={email} placeholder="you@example.com" />
   </div>
   <br />
   <button onclick={handleClick}>Start meditation</button>
@@ -130,7 +115,7 @@
 
 <style>
   :root {
-    --color-bg: #000;
+    --color-bg: #101010;
     --color-text: #fff;
     --color-text-secondary: #aaa;
     --color-link: #fafafa;
@@ -143,12 +128,48 @@
     justify-content: center;
   }
 
-  .pad-16 {
-    padding: 16px 0 0;
+  h1 {
+    margin: 0.2rem 0;
+    font-size: 3rem;
+    line-height: 3rem;
+    padding-top: 30px;
   }
 
-  h1 {
-    margin-bottom: 0.2rem;
+  .pad-60-top {
+    padding-top: 60px;
+  }
+
+  textarea, input {
+    background: #101010;
+    color: #fff;
+  }
+
+  textarea, input {
+    margin-bottom: 4px;
+  }
+
+  textarea::placeholder, input::placeholder {
+    color: #aaa;
+  }
+
+  textarea, textarea::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  }
+
+  label {
+    margin-bottom: 8px;
+  }
+
+  .mute {
+    color: var(--color-text-secondary);
+  }
+
+  input[type="email"] {
+    width: 100%;
+  }
+
+  input[type="email"]::focus {
+    border: none;
   }
 
   button {
