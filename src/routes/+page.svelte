@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import yoga from "../images/yoga_11063629.png";
 
-  let durationInSeconds = "60";
+  let durationInSeconds = 60;
   let meditationInputElement;
   let meditationPrompt = "";
   let musicPrompt = "";
@@ -25,7 +25,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        duration: durationInSeconds,
+        duration: Number(durationInSeconds),
         meditationPrompt: meditationPrompt,
         musicPrompt: musicPrompt,
         email: email,
