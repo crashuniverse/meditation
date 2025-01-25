@@ -1,12 +1,14 @@
 <script>
   import { onMount } from "svelte";
   import logo from "../images/logo.png";
+  import ahoumLogo from "../images/ahoum-logo.png";
 
   let durationInSeconds = "180";
   let meditationInputElement;
   let meditationPrompt = "";
   let musicPrompt = "";
   let email = "";
+  let phone = "";
   let isAudioHidden = false;
   let isLoading = false;
   let audioSrc;
@@ -29,6 +31,7 @@
         meditationPrompt: meditationPrompt,
         musicPrompt: musicPrompt,
         email: email,
+        phone: phone,
       }),
     })
       .then((response) => response.json())
@@ -52,11 +55,14 @@
       <img src={logo} alt="meditate gpt logo" width="80" />
     </div>
   </div>
-  <div>Powered by AHOUM</div>
+  <div class="flex-row">
+    <div>Powered by &nbsp;</div>
+    <img src={ahoumLogo} alt="ahoum logo" width="80" />
+  </div>
 </header>
 <main>
   <div>
-    <label for="meditationPrompt">Description</label>
+    <label for="meditationPrompt">How are you feeling about life?</label>
     <textarea
       id="meditationPrompt"
       type="text"
@@ -87,6 +93,11 @@
       Enter your email to receive the meditation audio via email once it is
       generated
     </div>
+    <br />
+  </div>
+  <div>
+    <label for="phone">Phone</label>
+    <input id="phone" type="phone" bind:value={phone} placeholder="9810098100" />
   </div>
   <br />
   <button onclick={handleClick}>Start meditation</button>
@@ -142,9 +153,6 @@
   textarea, input {
     background: #101010;
     color: #fff;
-  }
-
-  textarea, input {
     margin-bottom: 4px;
   }
 
@@ -158,6 +166,7 @@
 
   label {
     margin-bottom: 8px;
+    width: 300px;
   }
 
   .mute {
@@ -168,8 +177,9 @@
     width: 100%;
   }
 
-  input[type="email"]::focus {
-    border: none;
+  #meditationPrompt:focus-visible, #email:focus-visible, #phone:focus-visible {
+    border: solid 1px #fafafa;
+    outline: solid 1px #fafafa;
   }
 
   button {
