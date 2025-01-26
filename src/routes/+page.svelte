@@ -71,7 +71,6 @@
       bind:this={meditationInputElement}
       rows="3"
     ></textarea>
-    <div class="mute">Describe your meditation session</div>
     <br />
   </div>
   <div>
@@ -88,16 +87,26 @@
   </div>
   <div>
     <label for="email">Email</label>
-    <input id="email" type="email" bind:value={email} placeholder="you@example.com" />
+    <input
+      id="email"
+      type="email"
+      bind:value={email}
+      placeholder="you@example.com"
+    />
     <div class="mute">
-      Enter your email to receive the meditation audio via email once it is
-      generated
+      Enter your email to receive the personalised mindfulness audio session via
+      email once it is generated
     </div>
     <br />
   </div>
   <div>
     <label for="phone">Phone</label>
-    <input id="phone" type="phone" bind:value={phone} placeholder="9810098100" />
+    <input
+      id="phone"
+      type="phone"
+      bind:value={phone}
+      placeholder="9810098100"
+    />
   </div>
   <br />
   <button onclick={handleClick}>Start meditation</button>
@@ -150,18 +159,22 @@
     padding-top: 60px;
   }
 
-  textarea, input {
+  textarea,
+  input {
     background: #101010;
     color: #fff;
     margin-bottom: 4px;
   }
 
-  textarea::placeholder, input::placeholder {
+  textarea::placeholder,
+  input::placeholder {
     color: #aaa;
   }
 
-  textarea, textarea::placeholder {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  textarea,
+  textarea::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   }
 
   label {
@@ -177,7 +190,9 @@
     width: 100%;
   }
 
-  #meditationPrompt:focus-visible, #email:focus-visible, #phone:focus-visible {
+  #meditationPrompt:focus-visible,
+  #email:focus-visible,
+  #phone:focus-visible {
     border: solid 1px #fafafa;
     outline: solid 1px #fafafa;
   }
