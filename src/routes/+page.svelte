@@ -74,7 +74,7 @@
     <br />
   </div>
   <div>
-    <label for="180">Meditation duration</label>
+    <label for="180">Duration</label>
     <input
       type="radio"
       id="180"
@@ -109,13 +109,13 @@
     />
   </div>
   <br />
-  <button onclick={handleClick}>Start meditation</button>
+  <button onclick={handleClick}>Personalise</button>
   {#if isAudioHidden}
     <div>
       <p>
-        Generate a meditation session complete with a relaxing background,
-        featuring gentle music, and guided breathing exercise to help you
-        achieve a state of deep relaxation and mindfulness.
+You shall recieve a personalised guidance audio on your email shortly.<br>
+Check your spam folder for AHOUM email.<br>
+Check the colour of the installation.
       </p>
       <audio controls>
         <source src={audioSrc} type="audio/mpeg" />
