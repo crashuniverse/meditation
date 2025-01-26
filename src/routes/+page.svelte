@@ -34,10 +34,10 @@
         phone: phone,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
         console.log("Success:", data);
-        audioSrc = data?.generatePublicDownloadUrl;
+        audioSrc = data;
         isAudioHidden = true;
       })
       .finally(() => {
