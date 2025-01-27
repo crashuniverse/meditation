@@ -11,7 +11,7 @@
   let phone = "";
   let isAudioVisible = false;
   let isLoading = false;
-  let audioSrc = 'https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/a8ea3a3d-d530-4e81-b3b0-ed22c774d461-meditation.mp3';
+  let audioSrc = 'https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3';
 
   onMount(() => {
     meditationInputElement.focus();
@@ -19,7 +19,7 @@
 
   function handleClick() {
     console.log("clicked");
-    isAudioVisible = false;
+    isAudioVisible = true;
     isLoading = true;
     fetch("https://vlui9b.buildship.run/meditate-gpt-b5517a9775bc", {
       method: "POST",
@@ -38,7 +38,6 @@
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        isAudioVisible = true;
         return response.text();
       })
       .then((data) => {
