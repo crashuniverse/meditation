@@ -9,9 +9,9 @@
   let musicPrompt = "";
   let email = "";
   let phone = "";
-  let isAudioHidden = false;
+  let isAudioVisible = false;
   let isLoading = false;
-  let audioSrc;
+  let audioSrc = 'https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/a8ea3a3d-d530-4e81-b3b0-ed22c774d461-meditation.mp3';
 
   onMount(() => {
     meditationInputElement.focus();
@@ -19,7 +19,7 @@
 
   function handleClick() {
     console.log("clicked");
-    isAudioHidden = false;
+    isAudioVisible = false;
     isLoading = true;
     fetch("https://vlui9b.buildship.run/meditate-gpt-b5517a9775bc", {
       method: "POST",
@@ -34,15 +34,19 @@
         phone: phone,
       }),
     })
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        isAudioVisible = true;
+        return response.text();
+      })
       .then((data) => {
         console.log("Success:", data);
-        audioSrc = data;
-        isAudioHidden = true;
       })
       .finally(() => {
         console.log("finally");
-        isAudioHidden = true;
+        isAudioVisible = true;
         isLoading = false;
       });
   }
@@ -67,7 +71,7 @@
       id="meditationPrompt"
       type="text"
       bind:value={meditationPrompt}
-      placeholder="I'm feeling nostalgic, help me focus on the present and future"
+      placeholder=""
       bind:this={meditationInputElement}
       rows="3"
     ></textarea>
@@ -109,13 +113,14 @@
     />
   </div>
   <br />
-  <button onclick={handleClick}>Personalise</button>
-  {#if isAudioHidden}
+  <button onclick={handleClick} disabled={isLoading}>Personalise</button>
+  {#if isAudioVisible}
     <div>
       <p>
-You shall recieve a personalised guidance audio on your email shortly.<br>
-Check your spam folder for AHOUM email.<br>
-Check the colour of the installation.
+        You shall recieve a personalised guidance audio on your email shortly.<br
+        />
+        Check your spam folder for AHOUM email.<br />
+        Check the colour of the installation.
       </p>
       <audio controls>
         <source src={audioSrc} type="audio/mpeg" />
@@ -126,7 +131,7 @@ Check the colour of the installation.
   {#if isLoading}
     <div>
       <p>
-        Crafting a meditation track to gently guide your mind into a state of
+        Crafting a personalised track to gently guide your mind into a state of
         tranquility. Generally takes about a minute.
       </p>
     </div>
@@ -168,7 +173,7 @@ Check the colour of the installation.
 
   textarea::placeholder,
   input::placeholder {
-    color: #aaa;
+    color: #555;
   }
 
   textarea,
