@@ -11,7 +11,8 @@
   let phone = "";
   let isAudioVisible = false;
   let isLoading = false;
-  let audioSrc = 'https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3';
+  let audioSrc =
+    "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3";
 
   onMount(() => {
     meditationInputElement.focus();
@@ -65,7 +66,11 @@
 </header>
 <main>
   <div>
-    <label for="meditationPrompt">How are you feeling about life?</label>
+    <label for="meditationPrompt"
+      >What is a part of yourself that you are working on? What are the
+      concerns, hindrances, gratitudes that you don't often talk about? (in 20
+      words)</label
+    >
     <textarea
       id="meditationPrompt"
       type="text"
@@ -90,26 +95,12 @@
   </div>
   <div>
     <label for="email">Email</label>
-    <input
-      id="email"
-      type="email"
-      bind:value={email}
-      placeholder="you@example.com"
-    />
-    <div class="mute">
-      Enter your email to receive the personalised mindfulness audio session via
-      email once it is generated
-    </div>
+    <input id="email" type="email" bind:value={email} />
     <br />
   </div>
   <div>
     <label for="phone">Phone</label>
-    <input
-      id="phone"
-      type="phone"
-      bind:value={phone}
-      placeholder="9810098100"
-    />
+    <input id="phone" type="phone" bind:value={phone} />
   </div>
   <br />
   <button onclick={handleClick} disabled={isLoading}>Personalise</button>
@@ -183,11 +174,6 @@
 
   label {
     margin-bottom: 8px;
-    width: 300px;
-  }
-
-  .mute {
-    color: var(--color-text-secondary);
   }
 
   input[type="email"] {
