@@ -11,8 +11,11 @@
   let phone = "";
   let isAudioVisible = false;
   let isLoading = false;
+  let isLoadingComplete = false;
   let audioSrc =
     "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3";
+  let color = "";
+  let colordescription = "";
 
   onMount(() => {
     meditationInputElement.focus();
@@ -39,21 +42,25 @@
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.text();
+        return response.json();
       })
       .then((data) => {
+        color = data?.color;
+        colordescription = data?.hexcode;
         console.log("Success:", data);
+        isLoadingComplete = true;
       })
       .finally(() => {
         console.log("finally");
         isAudioVisible = true;
         isLoading = false;
+        isLoadingComplete = true;
       });
   }
 </script>
 
 <header>
-  <div class="flex-row pad-60-top">
+  <div class="flex-row pad-30-top">
     <h1>SPIRAL OF LIFE</h1>
     <div>
       <img src={logo} alt="meditate gpt logo" width="80" />
@@ -116,14 +123,16 @@
         <source src={audioSrc} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
+      <br />
+      <br />
     </div>
   {/if}
-  {#if isLoading}
+  <br />
+  {#if isLoadingComplete}
     <div>
-      <p>
-        Crafting a personalised track to gently guide your mind into a state of
-        tranquility. Generally takes about a minute.
-      </p>
+      <div>{colordescription}</div>
+      <br/>
+      <div class="circle {color}">&nbsp;</div>
     </div>
   {/if}
 </main>
@@ -134,6 +143,10 @@
     --color-text: #fff;
     --color-text-secondary: #aaa;
     --color-link: #fafafa;
+  }
+
+  main {
+    padding: 1rem 1rem 3rem;
   }
 
   .flex-row {
@@ -150,8 +163,8 @@
     padding-top: 30px;
   }
 
-  .pad-60-top {
-    padding-top: 60px;
+  .pad-30-top {
+    padding-top: 30px;
   }
 
   textarea,
@@ -190,5 +203,45 @@
   button {
     padding: 0.6rem 2rem;
     font-weight: normal;
+  }
+
+  .color-box {
+    width: 300px;
+    height: 80px;
+  }
+
+  .circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+
+  /* Chakra colors sourced from traditional meditation practices */
+  .red {
+    background-color: #ff0000; /* Root Chakra */
+  }
+
+  .orange {
+    background-color: #ff7f00; /* Sacral Chakra */
+  }
+
+  .yellow {
+    background-color: #ffff00; /* Solar Plexus Chakra */
+  }
+
+  .green {
+    background-color: #00ff00; /* Heart Chakra */
+  }
+
+  .blue {
+    background-color: #0000ff; /* Throat Chakra */
+  }
+
+  .indigo {
+    background-color: #4b0082; /* Third Eye Chakra */
+  }
+
+  .violet {
+    background-color: #8b00ff; /* Crown Chakra */
   }
 </style>
