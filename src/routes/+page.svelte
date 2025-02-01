@@ -15,7 +15,7 @@
   let audioSrc =
     "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3";
   let color = "";
-  let colordescription = "";
+  let colordescriptions = "";
 
   onMount(() => {
     meditationInputElement.focus();
@@ -46,7 +46,8 @@
       })
       .then((data) => {
         color = data?.color;
-        colordescription = data?.hexcode;
+        colordescriptions = data?.colordescription.split("\n\n");
+        console.log(colordescriptions);
         console.log("Success:", data);
         isLoadingComplete = true;
       })
@@ -114,10 +115,11 @@
   {#if isAudioVisible}
     <div>
       <p>
+        Check the colour of the installation.<br />
+        Scroll down for AHOUM SPEAK in 10 seconds.<br />
         You shall recieve a personalised guidance audio on your email shortly.<br
         />
         Check your spam folder for AHOUM email.<br />
-        Check the colour of the installation.
       </p>
       <audio controls>
         <source src={audioSrc} type="audio/mpeg" />
@@ -127,12 +129,14 @@
       <br />
     </div>
   {/if}
-  <br />
   {#if isLoadingComplete}
     <div>
-      <div>{colordescription}</div>
-      <br/>
       <div class="circle {color}">&nbsp;</div>
+      <br />
+      {#each colordescriptions as description}
+        <div>{description}</div>
+        <br />
+      {/each}
     </div>
   {/if}
 </main>
@@ -217,31 +221,31 @@
   }
 
   /* Chakra colors sourced from traditional meditation practices */
-  .red {
+  .Red {
     background-color: #ff0000; /* Root Chakra */
   }
 
-  .orange {
+  .Orange {
     background-color: #ff7f00; /* Sacral Chakra */
   }
 
-  .yellow {
+  .Yellow {
     background-color: #ffff00; /* Solar Plexus Chakra */
   }
 
-  .green {
+  .Green {
     background-color: #00ff00; /* Heart Chakra */
   }
 
-  .blue {
+  .Blue {
     background-color: #0000ff; /* Throat Chakra */
   }
 
-  .indigo {
+  .Indigo {
     background-color: #4b0082; /* Third Eye Chakra */
   }
 
-  .violet {
+  .Violet {
     background-color: #8b00ff; /* Crown Chakra */
   }
 </style>
