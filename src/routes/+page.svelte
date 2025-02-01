@@ -9,11 +9,9 @@
   let musicPrompt = "";
   let email = "";
   let phone = "";
-  let isAudioVisible = false;
   let isLoading = false;
   let isLoadingComplete = false;
-  let audioSrc =
-    "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3";
+  let audioSrc = "";
   let color = "";
   let colordescriptions = "";
 
@@ -23,7 +21,6 @@
 
   function handleClick() {
     console.log("clicked");
-    isAudioVisible = true;
     isLoading = true;
     fetch("https://vlui9b.buildship.run/meditate-gpt-b5517a9775bc", {
       method: "POST",
@@ -45,15 +42,46 @@
         return response.json();
       })
       .then((data) => {
-        color = data?.color;
+        color = data?.color?.toLowerCase();
         colordescriptions = data?.colordescription.split("\n\n");
-        console.log(colordescriptions);
+        switch (color) {
+          case "red":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/7adc1b4e-a77c-44cf-aed5-829727bd43ac-meditation.mp3";
+            break;
+          case "orange":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/1e60d36d-055b-4c2c-b4e1-1a8b211d63df-meditation.mp3";
+            break;
+          case "yellow":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/886df943-ecfe-4e87-a890-733269331736-meditation.mp3";
+            break;
+          case "green":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/0dc33e44-a7cb-4e27-917e-9ca20e895a8a-meditation.mp3";
+            break;
+          case "blue":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/d9b3cd0b-7499-4b99-b147-5d529cde224c-meditation.mp3";
+            break;
+          case "indigo":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3";
+            break;
+          case "violet":
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/ecbcac82-e132-45e1-ae07-1578367ed292-meditation.mp3";
+            break;
+          default:
+            audioSrc =
+              "https://storage.googleapis.com/buildship-vlui9b-asia-southeast1/e036673b-2393-4646-bda3-e0fdd12702b5-meditation.mp3";
+        }
         console.log("Success:", data);
         isLoadingComplete = true;
       })
       .finally(() => {
         console.log("finally");
-        isAudioVisible = true;
         isLoading = false;
         isLoadingComplete = true;
       });
@@ -112,7 +140,7 @@
   </div>
   <br />
   <button onclick={handleClick} disabled={isLoading}>Personalise</button>
-  {#if isAudioVisible}
+  {#if isLoadingComplete}
     <div>
       <p>
         Check the colour of the installation.<br />
@@ -127,10 +155,6 @@
       </audio>
       <br />
       <br />
-    </div>
-  {/if}
-  {#if isLoadingComplete}
-    <div>
       <div class="circle {color}">&nbsp;</div>
       <br />
       {#each colordescriptions as description}
@@ -221,31 +245,31 @@
   }
 
   /* Chakra colors sourced from traditional meditation practices */
-  .Red {
+  .red {
     background-color: #ff0000; /* Root Chakra */
   }
 
-  .Orange {
+  .orange {
     background-color: #ff7f00; /* Sacral Chakra */
   }
 
-  .Yellow {
+  .yellow {
     background-color: #ffff00; /* Solar Plexus Chakra */
   }
 
-  .Green {
+  .green {
     background-color: #00ff00; /* Heart Chakra */
   }
 
-  .Blue {
+  .blue {
     background-color: #0000ff; /* Throat Chakra */
   }
 
-  .Indigo {
+  .indigo {
     background-color: #4b0082; /* Third Eye Chakra */
   }
 
-  .Violet {
+  .violet {
     background-color: #8b00ff; /* Crown Chakra */
   }
 </style>
